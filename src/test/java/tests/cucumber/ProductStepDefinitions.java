@@ -2,6 +2,7 @@ package tests.cucumber;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import org.junit.Assert;
 import tests.pageObjects.ProductPage;
 import utilities.Driver;
 
@@ -14,6 +15,7 @@ public class ProductStepDefinitions {
     @And("I sorted the results according to {string}")
     public void iSortedTheResultsAccordingTo(String arg0) {
         productPage.smartList(arg0);
+        Assert.assertTrue("Yorum Sayisina göre siralama yapilamadi",productPage.driver.getCurrentUrl().contains(arg0));
     }
 
 

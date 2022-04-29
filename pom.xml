@@ -48,6 +48,7 @@
             <version>4.7.4</version>
         </dependency>
 
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -62,76 +63,32 @@
 
 
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
-                <configuration>
-                    <runOrder>Alphabetical</runOrder>
-                    <includes>
-                        <include>**/CucumberRunner.java</include>
-                        <include>**/FailedRunner.java</include>
-                    </includes>
-                    <testFailureIgnore>false</testFailureIgnore>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>net.masterthought</groupId>
-                <artifactId>maven-cucumber-reporting</artifactId>
-                <version>4.9.0</version>
-                <executions>
-                    <execution>
-                        <id>execution</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <projectName>Cucumber HTML Reports</projectName>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                            <inputDirectory>${project.build.directory}</inputDirectory>
-                            <jsonFiles>
-                                <param>**/cucumber*.json</param>
-                            </jsonFiles>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
-
-    <profiles>
-        <profile>
-            <id>RegressionRunner</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>3.0.0-M3</version>
-                        <configuration>
-
-                            <parallel>methods</parallel>
-                            <perCoreThreadCount>false</perCoreThreadCount>
-                            <threadCountMethods>10</threadCountMethods>
-
-                            <includes>
-                                <include>**/RegressionRunner.java</include>
-                            </includes>
-                            <testFailureIgnore>false</testFailureIgnore>
-                        </configuration>
-                    </plugin>
-
-
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
+<build>
+    <plugins>
+        <plugin>
+            <groupId>net.masterthought</groupId>
+            <artifactId>maven-cucumber-reporting</artifactId>
+            <version>4.9.0</version>
+            <executions>
+                <execution>
+                    <id>execution</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                    <configuration>
+                        <projectName>Cucumber HTML Reports</projectName>
+                        <outputDirectory>${project.build.directory}</outputDirectory>
+                        <inputDirectory>${project.build.directory}</inputDirectory>
+                        <jsonFiles>
+                            <param>**/cucumber*.json</param>
+                        </jsonFiles>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 
 
 </project>

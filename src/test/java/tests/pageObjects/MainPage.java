@@ -38,7 +38,7 @@ public class MainPage extends DSL {
 
     public MainPage seeToMagazalarButon(){
         click(By.xpath("(//a[@title='Mağazaları Gör'])"));
-
+        Assert.assertTrue("Mağazalar sayfasina yönlendirilemedi",driver.getCurrentUrl().contains("https://www.n11.com/magazalar"));
         return this;
     }
     public MainPage popUpDahaSonra(){

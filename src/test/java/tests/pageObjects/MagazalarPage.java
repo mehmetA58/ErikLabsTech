@@ -1,11 +1,11 @@
 package tests.pageObjects;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.DSL;
 import utilities.Driver;
 
@@ -21,34 +21,34 @@ public class MagazalarPage extends DSL {
 
     public MagazalarPage clickTumMagazalar() {
         click(By.xpath("(//div[@class='tabList'])//ul//li[4]//div//h3"));
+        String tumMgazalarTitle=driver.findElement(By.xpath("(//div[@id='contentSellerList']/div/div[2]/div/div[2]/div[4]/h2)")).getText();
+        String AileBas=driver.findElement(By.xpath("(//div[@class='sellerListHolder'])[4]//span//i")).getText();
+        Assert.assertTrue("Tüm Magazalar Title görüntülenemedi",tumMgazalarTitle.contains("Tüm Mağazalar"));
+        Assert.assertTrue("Aile baslayan Magazalar Görüntülenemedi",AileBas.contains("A"));
         return this;
     }
 
     public MagazalarPage beginLetterAMagaza() throws IOException {
         List<WebElement> magaza = Driver.get().findElements(By.xpath("(//div[@class='sellerListHolder'])[4]//ul"));
-        File file = new File("C:\\Users\\pc1\\Desktop\\TestData.xls");
+
+        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='sellerListHolder'])[4]//ul")));
+
+        Writer writer = null;
 
 
-        FileInputStream inputStream = new FileInputStream(file);
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream("ErikLabs .txt"), "utf-8"));
+            writer.write("N11 A ile başlayan Mağazalar : " + driver.findElement(By.xpath("(//div[@class='sellerListHolder'])[4]//ul")).getText());
 
-
-        HSSFWorkbook wb = new HSSFWorkbook(inputStream);
-
-
-        HSSFSheet sheet = wb.getSheet("Letter A");
-
-
-        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
-
-        for (int i = 1; i <= magaza.size(); i++) {
-
-
-            HSSFCell cell = sheet.getRow(i).createCell(0);
-
-            FileOutputStream outputStream = new FileOutputStream("C:\\Users\\pc1\\Desktop\\TestData.xls");
-            wb.write(outputStream);
+        } catch (IOException ex) {
+            // report
+        } finally {
+            try {
+                writer.close();
+            } catch (Exception ex) {
+            }
         }
-        wb.close();
         return this;
     }
 
